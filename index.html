@@ -1,0 +1,793 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nhật Ký & Hoạt Động Lớp 10A4 - THPT Lê Duẩn</title>
+<style>
+:root {
+  --primary: #087cff;
+  --primary-dark: #06356c;
+  --secondary: #00bddf;
+  --accent: #ff9f43;
+  --danger: #ff5252;
+  --bg-gradient: radial-gradient(circle at 10% 10%, #dff6ff, transparent 40%), linear-gradient(135deg, #eef7ff, #e3f0fc);
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.9);
+  --shadow-3d: 0 20px 40px rgba(8, 124, 255, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  color: #12304f;
+  background: var(--bg-gradient);
+  min-height: 100vh;
+}
+
+header {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid #d7ebfa;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+}
+.nav {
+  max-width: 1240px; margin: auto; padding: 12px 20px;
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+}
+.brand { font-weight: 800; color: var(--primary-dark); font-size: 1.1rem; display: flex; align-items: center; gap: 10px; }
+.logo {
+  display: inline-grid; place-items: center; width: 46px; height: 46px; border-radius: 14px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: white; font-size: 24px; box-shadow: 0 10px 20px rgba(8, 123, 255, 0.3);
+  transform: style 0.3s;
+}
+.logo:hover { transform: rotate(10deg) scale(1.05); }
+
+nav { display: flex; gap: 6px; flex-wrap: wrap; }
+nav button, .btn {
+  border: 0; border-radius: 12px; padding: 10px 16px; font-weight: 700; cursor: pointer;
+  transition: all 0.25s ease; font-size: 14px; display: inline-flex; align-items: center; gap: 6px;
+}
+nav button { background: transparent; color: #245170; }
+nav button:hover, nav button.active { background: #e7f5ff; color: var(--primary); transform: translateY(-2px); }
+.btn { background: #fff; color: var(--primary); box-shadow: var(--shadow-3d); border: 1px solid #fff; }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(8, 124, 255, 0.25); }
+.btn.primary { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; border: none; }
+.btn.danger { background: linear-gradient(135deg, #ff5252, #ff7979); color: white; }
+
+main { max-width: 1240px; margin: auto; padding: 25px 20px 60px; }
+
+/* Hero Section 3D */
+.hero {
+  display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 30px; align-items: center;
+  background: var(--glass-bg); border: 1px solid var(--glass-border);
+  border-radius: 28px; padding: 35px; box-shadow: var(--shadow-3d); backdrop-filter: blur(12px);
+  margin-bottom: 30px; position: relative; overflow: hidden;
+}
+.tag {
+  display: inline-block; background: #e8f4ff; color: var(--primary); padding: 6px 14px;
+  border-radius: 99px; font-weight: 800; font-size: 13px; margin-bottom: 12px;
+}
+h1 { font-size: clamp(32px, 5vw, 48px); line-height: 1.15; margin: 10px 0; color: #062c59; letter-spacing: -1px; }
+.grad { background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.lead { font-size: 16px; line-height: 1.6; color: #59758f; margin-bottom: 20px; }
+
+.orbit { height: 260px; display: grid; place-items: center; position: relative; perspective: 1000px; }
+.core {
+  width: 120px; height: 120px; border-radius: 32px; display: grid; place-items: center; font-size: 50px;
+  background: linear-gradient(145deg, #ffffff, #dff6ff);
+  box-shadow: 10px 20px 40px rgba(8, 123, 255, 0.25), inset -5px -5px 15px rgba(255,255,255,0.8);
+  animation: float 4s ease-in-out infinite; transform-style: preserve-3d;
+}
+.ring {
+  position: absolute; border: 2px dashed rgba(8, 124, 255, 0.3); border-radius: 50%;
+  width: 240px; height: 120px; transform: rotateX(70deg); animation: spin 12s linear infinite;
+}
+.float-icon { position: absolute; font-size: 28px; animation: float 3s ease-in-out infinite; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1)); }
+.a { top: 10px; right: 20px; animation-delay: 0s; }
+.b { bottom: 10px; left: 20px; animation-delay: 1s; }
+.c { top: 60px; left: 0px; animation-delay: 1.5s; }
+.d { bottom: 30px; right: 10px; animation-delay: 0.5s; }
+
+@keyframes spin { to { transform: rotateX(70deg) rotateZ(360deg); } }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+
+/* Cards & Layout */
+.card {
+  background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 20px;
+  padding: 20px; box-shadow: var(--shadow-3d); backdrop-filter: blur(10px); margin-bottom: 24px;
+}
+.section-title { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 2px solid #eef5fc; padding-bottom: 10px; }
+.section-title h2 { margin: 0; color: var(--primary-dark); font-size: 20px; display: flex; align-items: center; gap: 8px; }
+
+/* Tabs Tổ & Học sinh */
+.tabs { display: flex; gap: 10px; margin-bottom: 15px; }
+.tab-btn { background: #eaf3fa; border: none; padding: 10px 18px; border-radius: 12px; font-weight: 700; cursor: pointer; color: #51708e; }
+.tab-btn.active { background: var(--primary); color: white; box-shadow: 0 4px 12px rgba(8, 124, 255, 0.3); }
+
+.grid-members { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+.member-card { background: white; padding: 12px 15px; border-radius: 14px; border: 1px solid #e1effa; display: flex; align-items: center; gap: 10px; font-weight: 600; }
+.member-avatar { width: 36px; height: 36px; border-radius: 50%; background: #e8f4ff; color: var(--primary); display: grid; place-items: center; font-weight: 800; }
+
+/* Nhật ký & Hoạt động */
+.filter-bar { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+.filter-chip { padding: 6px 14px; border-radius: 20px; background: white; border: 1px solid #d0e4f5; font-size: 13px; font-weight: 600; cursor: pointer; }
+.filter-chip.active { background: var(--primary-dark); color: white; border-color: var(--primary-dark); }
+
+.composer { background: #f4f9fe; border: 1px dashed #b1d8f8; border-radius: 16px; padding: 16px; margin-bottom: 20px; }
+.row { display: flex; gap: 10px; margin-bottom: 10px; }
+.row > * { flex: 1; }
+input, textarea, select {
+  width: 100%; padding: 10px 14px; border: 1px solid #cce3f5; border-radius: 10px; background: white; font: inherit; outline: none;
+}
+input:focus, textarea:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(8, 124, 255, 0.15); }
+
+/* Posts & Comments */
+.post { background: white; border-radius: 16px; padding: 18px; margin-bottom: 16px; border: 1px solid #e5f0fa; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+.post-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.user-info { display: flex; align-items: center; gap: 10px; }
+.avatar { width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; display: grid; place-items: center; font-weight: 800; }
+.badge { background: #e1f5fe; color: #0288d1; padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: 700; }
+.post-img { width: 100%; max-height: 400px; object-fit: cover; border-radius: 12px; margin: 10px 0; }
+.comments { background: #f8fbfd; border-radius: 12px; padding: 12px; margin-top: 12px; }
+.comment-item { display: flex; justify-content: space-between; align-items: center; background: white; padding: 8px 12px; border-radius: 8px; margin-bottom: 6px; font-size: 13px; border: 1px solid #edf4f9; }
+
+/* Photo Gallery */
+.gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+.gallery-item { position: relative; border-radius: 12px; overflow: hidden; height: 120px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+.gallery-item:hover img { transform: scale(1.08); }
+.gallery-item .del-btn { position: absolute; top: 5px; right: 5px; background: rgba(255,0,0,0.8); color: white; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; display: grid; place-items: center; font-size: 12px; }
+
+/* Tables */
+table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
+th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #eef5fc; }
+th { background: #f0f7ff; color: var(--primary-dark); font-weight: 700; }
+
+/* Modals & Toasts */
+.modal { position: fixed; inset: 0; background: rgba(0, 20, 40, 0.6); backdrop-filter: blur(4px); display: none; place-items: center; padding: 20px; z-index: 200; }
+.modal.show { display: grid; }
+.box { background: white; padding: 25px; border-radius: 20px; max-width: 500px; width: 100%; box-shadow: 0 25px 50px rgba(0,0,0,0.2); }
+.toast { position: fixed; right: 20px; bottom: 20px; background: var(--primary-dark); color: white; padding: 12px 20px; border-radius: 12px; display: none; z-index: 300; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+
+@media(max-width: 850px) {
+  .hero { grid-template-columns: 1fr; text-align: center; }
+  .orbit { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="brand">
+      <span class="logo">🏫</span>
+      <div>
+        LỚP 10A4 - THPT LÊ DUẨN<br>
+        <small style="font-weight: 500; font-size: 12px; color: #607d8b;">GVCN: Thầy Thiện • Tây Ninh</small>
+      </div>
+    </div>
+    <nav>
+      <button onclick="scrollToSec('journal')" class="active">📖 Nhật Ký</button>
+      <button onclick="scrollToSec('teams')">👥 Tổ Lớp</button>
+      <button onclick="scrollToSec('honors')">⭐ Tuyên Dương</button>
+
+      <button onclick="scrollToSec('gallery')">📸 Góc Ảnh</button>
+      <button onclick="scrollToSec('violations')">⚠️️ Vi Phạm</button>
+      <button id="adminNavBtn" onclick="openLoginModal()" style="color: var(--primary); font-weight: 800;">🔐 Admin Login</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div>
+      <span class="tag">🎓 NIÊN KHÓA 2026 - 2027</span>
+      <h1>Không Gian Sinh Hoạt <span class="grad">Lớp 10A4</span></h1>
+      <p class="lead">Nơi ghi dấu hành trình học tập, phong trào, hoạt động nề nếp và những kỷ niệm đáng nhớ của tập thể lớp 10A4 Trường THPT Lê Duẩn, Tây Ninh.</p>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <button class="btn primary" onclick="scrollToSec('journal')">✍️ Viết Nhật Ký / Góp Ý</button>
+        <button class="btn" onclick="syncDataFromSheet()">🔄 Đồng bộ Google Sheet</button>
+      </div>
+    </div>
+    <div class="orbit">
+      <div class="ring"></div>
+      <div class="core">📚</div>
+      <span class="float-icon a">✏️</span>
+      <span class="float-icon b">🏆</span>
+      <span class="float-icon c">⚽</span>
+      <span class="float-icon d">🎨</span>
+    </div>
+  </section>
+
+  <!-- 1. Nhật Ký Hoạt Động Hàng Tuần -->
+  <section class="card" id="journal">
+    <div class="section-title">
+      <h2>📖 Nhật Ký Hoạt Động Hàng Tuần</h2>
+      <span id="syncStatus" style="font-size: 12px; color: #4caf50; font-weight: 600;">● Dữ liệu tự động cập nhật</span>
+    </div>
+
+    <!-- Filter Danh Mục -->
+    <div class="filter-bar">
+      <span class="filter-chip active" onclick="filterJournal('All', this)">Tất cả</span>
+      <span class="filter-chip" onclick="filterJournal('Học tập', this)">📚 Học tập</span>
+      <span class="filter-chip" onclick="filterJournal('Phong trào', this)">🏆 Phong trào</span>
+      <span class="filter-chip" onclick="filterJournal('Vui chơi', this)">🎉 Vui chơi</span>
+      <span class="filter-chip" onclick="filterJournal('Lao động', this)">🧹 Lao động</span>
+    </div>
+
+    <!-- Form Đăng Bài (Học sinh/Giáo viên) -->
+    <div class="composer">
+      <h4 style="margin: 0 0 10px 0; color: var(--primary-dark);">✍️ Đăng bài viết / Chia sẻ mới</h4>
+      <div class="row">
+        <input type="text" id="postAuthor" placeholder="Họ và tên của bạn...">
+        <select id="postCategory">
+          <option value="Học tập">📚 Học tập</option>
+          <option value="Phong trào">🏆 Phong trào</option>
+          <option value="Vui chơi">🎉 Vui chơi</option>
+          <option value="Lao động">🧹 Lao động</option>
+        </select>
+      </div>
+      <div class="row">
+        <textarea id="postContent" placeholder="Nhập nội dung nhật ký hoặc đóng góp ý kiến..."></textarea>
+      </div>
+      <div class="row">
+        <input type="text" id="postImgUrl" placeholder="Đường dẫn hình ảnh (URL - tùy chọn)">
+      </div>
+      <button class="btn primary" onclick="addPost()">🚀 Gửi bài viết</button>
+    </div>
+
+    <!-- Danh Sách Bài Đăng Nhật Ký -->
+    <div id="journalFeed"></div>
+  </section>
+
+  <!-- 2. Danh Sách 4 Tổ -->
+  <section class="card" id="teams">
+    <div class="section-title">
+      <h2>👥 Danh Sách Thành Viên Các Tổ</h2>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTeam('to1', this)">Tổ 1</button>
+      <button class="tab-btn" onclick="switchTeam('to2', this)">Tổ 2</button>
+      <button class="tab-btn" onclick="switchTeam('to3', this)">Tổ 3</button>
+      <button class="tab-btn" onclick="switchTeam('to4', this)">Tổ 4</button>
+    </div>
+    <div id="teamMemberList" class="grid-members"></div>
+  </section>
+
+  <!-- 3. Tuyên Dương Học Sinh Tiêu Biểu (Tuần 1 -> 35) -->
+  <section class="card" id="honors">
+    <div class="section-title">
+      <h2>🌟 Tuyên Dương Học Sinh Tiêu Biểu Hàng Tuần</h2>
+      <div id="adminHonorsBtn"></div>
+    </div>
+    <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 15px;">
+      <label><b>Chọn Tuần Học:</b></label>
+      <select id="weekSelect" onchange="renderHonors()" style="width: auto;">
+        <!-- Tuần 1 đến 35 -->
+      </select>
+    </div>
+    <div id="honorsDisplay" style="background: #fff8e7; padding: 15px; border-radius: 12px; border: 1px solid #ffe0b2;">
+      <!-- Hiển thị học sinh tuyên dương -->
+    </div>
+  </section>
+
+  <!-- 4. Góc Ảnh Nhật Ký Lớp -->
+  <section class="card" id="gallery">
+    <div class="section-title">
+      <h2>📸 Góc Ảnh Nhật Ký 10A4</h2>
+    </div>
+    <div class="composer" style="margin-bottom: 15px;">
+      <div class="row">
+        <input type="text" id="photoUrl" placeholder="Dán đường dẫn ảnh (URL) học sinh tự post...">
+        <input type="text" id="photoCaption" placeholder="Chú thích ảnh ngắn...">
+        <button class="btn primary" onclick="addPhoto()">📤 Đăng Ảnh</button>
+      </div>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </section>
+
+  <!-- 5. Bảng Nêu Tên Học Sinh Vi Phạm -->
+  <section class="card" id="violations">
+    <div class="section-title">
+      <h2>⚠️ Bảng Theo Dõi Nề Nếp & Vi Phạm</h2>
+      <div id="adminViolateBtn"></div>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Họ và Tên</th>
+          <th>Nội dung vi phạm</th>
+          <th>Này ghi nhận</th>
+          <th>Xử lý / Nhắc nhở</th>
+          <th class="admin-col" style="display:none;">Thao tác</th>
+        </tr>
+      </thead>
+      <tbody id="violationTableBody"></tbody>
+    </table>
+  </section>
+</main>
+
+<footer style="text-align: center; padding: 30px; color: #718aa1; font-weight: 600;">
+  💙 Trang Web Lớp 10A4 - Trường THPT Lê Duẩn Tây Ninh • GVCN: Thầy Thiện
+</footer>
+
+<!-- Modal Đăng Nhập Admin -->
+<div class="modal" id="loginModal">
+  <div class="box">
+    <h3 style="margin-top:0; color: var(--primary-dark);">🔐 Đăng Nhập Giáo Viên Chủ Nhiệm</h3>
+    <p style="font-size: 13px; color: #666;">Chỉ GVCN mới có quyền thêm/sửa/xóa nhật ký, tuyên dương và nề nếp.</p>
+    <div style="margin-bottom: 12px;">
+      <label>Tài khoản:</label>
+      <input type="text" id="adminUser" placeholder="Nhập tài khoản Admin">
+    </div>
+    <div style="margin-bottom: 15px;">
+      <label>Mật khẩu:</label>
+      <input type="password" id="adminPass" placeholder="Nhập mật khẩu">
+    </div>
+    <div style="display:flex; justify-content: flex-end; gap: 10px;">
+      <button class="btn" onclick="closeModal('loginModal')">Hủy</button>
+      <button class="btn primary" onclick="loginAdmin()">Đăng nhập</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Thêm Tuyên Dương (Admin) -->
+<div class="modal" id="honorModal">
+  <div class="box">
+    <h3>⭐ Cập Nhật Tuyên Dương Tuần</h3>
+    <div style="margin-bottom: 10px;">
+      <label>Họ tên Học sinh:</label>
+      <input type="text" id="honorName">
+    </div>
+    <div style="margin-bottom: 10px;">
+      <label>Thành tích / Lí do tuyên dương:</label>
+      <input type="text" id="honorReason">
+    </div>
+    <div style="display:flex; justify-content: flex-end; gap: 10px;">
+      <button class="btn" onclick="closeModal('honorModal')">Hủy</button>
+      <button class="btn primary" onclick="saveHonor()">Lưu Cập Nhật</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Thêm Vi Phạm (Admin) -->
+<div class="modal" id="violateModal">
+  <div class="box">
+    <h3>⚠️ Thêm Ghi Nhận Vi Phạm</h3>
+    <div style="margin-bottom: 10px;"><input type="text" id="vName" placeholder="Họ tên học sinh"></div>
+    <div style="margin-bottom: 10px;"><input type="text" id="vContent" placeholder="Lỗi vi phạm (VD: Đi muộn, thiếu bài)"></div>
+    <div style="margin-bottom: 10px;"><input type="text" id="vDate" placeholder="Ngày ghi nhận (DD/MM/YYYY)"></div>
+    <div style="margin-bottom: 10px;"><input type="text" id="vNote" placeholder="Hình thức nhắc nhở"></div>
+    <div style="display:flex; justify-content: flex-end; gap: 10px;">
+      <button class="btn" onclick="closeModal('violateModal')">Hủy</button>
+      <button class="btn primary" onclick="saveViolation()">Lưu Vi Phạm</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast">Thông báo</div>
+
+<script>
+// --- CẤU HÌNH GOOGLE SHEET SYNC ---
+// Dán link CSV xuất từ Google Sheet của bạn vào đây để đồng bộ tự động
+const GOOGLE_SHEET_CSV_URL = ""; 
+
+// --- DỮ LIỆU BAN ĐẦU ---
+let isAdmin = false;
+
+let teamsData = {
+  to1: ["Nguyễn Văn A (Tổ trưởng)", "Trần Thị B", "Lê Văn C", "Phạm Minh D", "Võ Thi E", "Đặng Văn F", "Hoàng Thị G", "Bùi Văn H", "Đỗ Thị I"],
+  to2: ["Nguyễn Thị K (Tổ trưởng)", "Trần Văn L", "Lê Thị M", "Phạm Văn N", "Võ Văn O", "Đặng Thị P", "Hoàng Văn Q", "Bùi Thị R", "Đỗ Văn S"],
+  to3: ["Nguyễn Văn T (Tổ trưởng)", "Trần Thị U", "Lê Văn V", "Phạm Thị X", "Võ Văn Y", "Đặng Thị Z", "Hoàng Văn AA", "Bùi Thị BB"],
+  to4: ["Nguyễn Thị CC (Tổ trưởng)", "Trần Văn DD", "Lê Thị EE", "Phạm Văn FF", "Võ Thị GG", "Đặng Văn HH", "Hoàng Thị II", "Bùi Văn KK"]
+};
+
+let honorsData = {
+  1: { name: "Nguyễn Văn A", reason: "Đạt điểm 10 môn Toán & tích cực phát biểu" },
+  2: { name: "Trần Thị B", reason: "Đạt giải Nhất học sinh giỏi cấp trường" }
+};
+
+let violationsData = [
+  { id: 1, name: "Nguyễn Văn X", content: "Đi học muộn 15 phút", date: "25/09/2026", note: "Đã nhắc nhở trước lớp" },
+  { id: 2, name: "Trần Văn Y", content: "Chưa làm bài tập về nhà môn Lý", date: "28/09/2026", note: "Chép phạt bài học" }
+];
+
+let galleryData = [
+  { id: 1, url: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=500", caption: "Buổi sinh hoạt lớp tuần 2" },
+  { id: 2, url: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=500", caption: "Lao động dọn dẹp khuôn viên trường" }
+];
+
+let journalData = [
+  {
+    id: 1,
+    author: "Thầy Thiện (GVCN)",
+    category: "Học tập",
+    content: "Chào mừng các em học sinh 10A4 đến với trang nhật ký số của lớp. Cần duy trì tinh thần tự học cao trong tuần này nhé!",
+    date: "20/09/2026",
+    img: "",
+    comments: [{ id: 101, author: "Nguyễn Văn A", text: "Tập thể 10A4 hứa sẽ cố gắng ạ!" }]
+  }
+];
+
+// KHỞI TẠO
+window.onload = function() {
+  initWeeks();
+  renderTeams('to1');
+  renderHonors();
+  renderGallery();
+  renderViolations();
+  renderJournal('All');
+  syncDataFromSheet();
+};
+
+function initWeeks() {
+  let select = document.getElementById('weekSelect');
+  for (let i = 1; i <= 35; i++) {
+    let opt = document.createElement('option');
+    opt.value = i;
+    opt.textContent = `Tuần ${i}`;
+    select.appendChild(opt);
+  }
+}
+
+// 1. ADMIN AUTHENTICATION
+function openLoginModal() {
+  if (isAdmin) {
+    isAdmin = false;
+    document.getElementById('adminNavBtn').textContent = "🔐 Admin Login";
+    toast("Đã đăng xuất tài khoản Admin!");
+    updateAdminUI();
+  } else {
+    document.getElementById('loginModal').classList.add('show');
+  }
+}
+
+function loginAdmin() {
+  let u = document.getElementById('adminUser').value.trim();
+  let p = document.getElementById('adminPass').value.trim();
+
+  if (u === "Admin" && p === "Thien@2627$") {
+    isAdmin = true;
+    document.getElementById('adminNavBtn').textContent = "🔓 Đăng xuất (Admin)";
+    closeModal('loginModal');
+    toast("Đăng nhập Giáo viên thành công!");
+    updateAdminUI();
+  } else {
+    alert("Sai tài khoản hoặc mật khẩu!");
+  }
+}
+
+function updateAdminUI() {
+  let adminCols = document.querySelectorAll('.admin-col');
+  adminCols.forEach(col => col.style.display = isAdmin ? 'table-cell' : 'none');
+  
+  document.getElementById('adminHonorsBtn').innerHTML = isAdmin ? `<button class="btn primary" onclick="openHonorModal()">✏️ Cập nhật Tuyên dương</button>` : '';
+  document.getElementById('adminViolateBtn').innerHTML = isAdmin ? `<button class="btn danger" onclick="openViolateModal()">➕ Thêm Vi phạm</button>` : '';
+  
+  renderJournal('All');
+  renderGallery();
+  renderViolations();
+}
+
+// 2. TỔ LỚP
+function switchTeam(teamKey, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderTeams(teamKey);
+}
+
+function renderTeams(teamKey) {
+  let list = teamsData[teamKey] || [];
+  let html = list.map(m => `
+    <div class="member-card">
+      <div class="member-avatar">${m.charAt(0)}</div>
+      <div>${m}</div>
+    </div>
+  `).join('');
+  document.getElementById('teamMemberList').innerHTML = html;
+}
+
+// 3. TUYÊN DƯƠNG
+function renderHonors() {
+  let week = document.getElementById('weekSelect').value;
+  let data = honorsData[week];
+  let container = document.getElementById('honorsDisplay');
+
+  if (data) {
+    container.innerHTML = `
+      <h3 style="margin:0 0 5px 0; color:#d97706;">🏆 Học sinh tiêu biểu Tuần ${week}: <b>${data.name}</b></h3>
+      <p style="margin:0; color:#b45309;">✨ <b>Thành tích:</b> ${data.reason}</p>
+    `;
+  } else {
+    container.innerHTML = `<p style="margin:0; color:#888;">Chưa có cập nhật tuyên dương cho Tuần ${week}.</p>`;
+  }
+}
+
+function openHonorModal() {
+  document.getElementById('honorModal').classList.add('show');
+}
+
+function saveHonor() {
+  let week = document.getElementById('weekSelect').value;
+  let name = document.getElementById('honorName').value.trim();
+  let reason = document.getElementById('honorReason').value.trim();
+
+  if (!name) return alert("Vui lòng nhập tên học sinh");
+  honorsData[week] = { name, reason };
+  closeModal('honorModal');
+  renderHonors();
+  toast(`Đã cập nhật tuyên dương cho Tuần ${week}`);
+}
+
+// 4. NHẬT KÝ & BÌNH LUẬN
+let currentFilter = 'All';
+function filterJournal(cat, chip) {
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  currentFilter = cat;
+  renderJournal(cat);
+}
+
+function renderJournal(filter) {
+  let feed = document.getElementById('journalFeed');
+  let filtered = filter === 'All' ? journalData : journalData.filter(j => j.category === filter);
+
+  feed.innerHTML = filtered.map(item => `
+    <div class="post">
+      <div class="post-head">
+        <div class="user-info">
+          <div class="avatar">${item.author.charAt(0)}</div>
+          <div>
+            <b>${item.author}</b> <span class="badge">${item.category}</span><br>
+            <small style="color:#888;">${item.date}</small>
+          </div>
+        </div>
+        ${isAdmin ? `<button class="btn danger" style="padding:4px 8px; font-size:12px;" onclick="deletePost(${item.id})">🗑️ Xóa Bài</button>` : ''}
+      </div>
+      <p style="margin: 10px 0; line-height: 1.5;">${item.content}</p>
+      ${item.img ? `<img src="${item.img}" class="post-img">` : ''}
+
+      <!-- Bình luận -->
+      <div class="comments">
+        <b style="font-size: 13px;">💬 Bình luận (${item.comments.length})</b>
+        <div style="margin-top: 8px;">
+          ${item.comments.map(c => `
+            <div class="comment-item">
+              <span><b>${c.author}:</b> ${c.text}</span>${isAdmin ? `<button style="border:none; background:none; color:red; cursor:pointer;" onclick="deleteComment(${item.id}, ${c.id})">✕</button>` : ''}
+            </div>
+          `).join('')}
+        </div>
+        <div class="row" style="margin-top: 8px; margin-bottom: 0;">
+          <input type="text" id="cmtName_${item.id}" placeholder="Tên bạn..." style="flex:0.3;">
+          <input type="text" id="cmtText_${item.id}" placeholder="Viết bình luận..." style="flex:0.7;">
+          <button class="btn primary" style="padding:6px 12px;" onclick="addComment(${item.id})">Gửi</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function addPost() {
+  let author = document.getElementById('postAuthor').value.trim();
+  let category = document.getElementById('postCategory').value;
+  let content = document.getElementById('postContent').value.trim();
+  let img = document.getElementById('postImgUrl').value.trim();
+
+  if (!author || !content) return alert("Vui lòng điền tên và nội dung bài viết.");
+
+  journalData.unshift({
+    id: Date.now(),
+    author, category, content, img,
+    date: new Date().toLocaleDateString('vi-VN'),
+    comments: []
+  });
+
+  document.getElementById('postContent').value = '';
+  document.getElementById('postImgUrl').value = '';
+  renderJournal(currentFilter);
+  toast("Đã đăng bài viết thành công!");
+}
+
+function deletePost(id) {
+  if (confirm("GVCN xác nhận xóa bài viết này?")) {
+    journalData = journalData.filter(j => j.id !== id);
+    renderJournal(currentFilter);
+    toast("Đã xóa bài viết!");
+  }
+}
+
+function addComment(postId) {
+  let name = document.getElementById(`cmtName_${postId}`).value.trim() || "Học sinh";
+  let text = document.getElementById(`cmtText_${postId}`).value.trim();
+
+  if (!text) return;
+
+  let post = journalData.find(j => j.id === postId);
+  if (post) {
+    post.comments.push({ id: Date.now(), author: name, text });
+    renderJournal(currentFilter);
+  }
+}
+
+function deleteComment(postId, commentId) {
+  if (!isAdmin) return;
+  let post = journalData.find(j => j.id === postId);
+  if (post) {
+    post.comments = post.comments.filter(c => c.id !== commentId);
+    renderJournal(currentFilter);
+    toast("Đã xóa bình luận!");
+  }
+}
+
+// 5. GÓC ẢNH
+function renderGallery() {
+  let grid = document.getElementById('galleryGrid');
+  grid.innerHTML = galleryData.map(img => `
+    <div class="gallery-item">
+      <img src="${img.url}" alt="Ảnh lớp">
+      ${isAdmin ? `<button class="del-btn" onclick="deletePhoto(${img.id})">✕</button>` : ''}
+    </div>
+  `).join('');
+}
+
+function addPhoto() {
+  let url = document.getElementById('photoUrl').value.trim();
+  let caption = document.getElementById('photoCaption').value.trim();
+  if (!url) return alert("Vui lòng dán link hình ảnh!");
+
+  galleryData.unshift({ id: Date.now(), url, caption });
+  document.getElementById('photoUrl').value = '';
+  document.getElementById('photoCaption').value = '';
+  renderGallery();
+  toast("Đã tải ảnh lên góc ảnh lớp!");
+}
+
+function deletePhoto(id) {
+  if (!isAdmin) return;
+  galleryData = galleryData.filter(g => g.id !== id);
+  renderGallery();
+  toast("Đã xóa ảnh!");
+}
+
+// 6. VI PHẠM
+function renderViolations() {
+  let tbody = document.getElementById('violationTableBody');
+  tbody.innerHTML = violationsData.map(v => `
+    <tr>
+      <td><b>${v.name}</b></td>
+      <td><span style="color:var(--danger);">${v.content}</span></td>
+      <td>${v.date}</td>
+      <td>${v.note}</td>
+      ${isAdmin ? `<td class="admin-col"><button class="btn danger" style="padding:4px 8px; font-size:12px;" onclick="deleteViolation(${v.id})">Xóa</button></td>` : ''}
+    </tr>
+  `).join('');
+}
+
+function openViolateModal() {
+  document.getElementById('violateModal').classList.add('show');
+}
+
+function saveViolation() {
+  let name = document.getElementById('vName').value.trim();
+  let content = document.getElementById('vContent').value.trim();
+  let date = document.getElementById('vDate').value.trim() || new Date().toLocaleDateString('vi-VN');
+  let note = document.getElementById('vNote').value.trim();
+
+  if (!name || !content) return alert("Vui lòng nhập họ tên và lỗi vi phạm.");
+
+  violationsData.push({ id: Date.now(), name, content, date, note });
+  closeModal('violateModal');
+  renderViolations();
+  toast("Đã thêm ghi nhận vi phạm.");
+}
+
+function deleteViolation(id) {
+  if (!isAdmin) return;
+  violationsData = violationsData.filter(v => v.id !== id);
+  renderViolations();
+  toast("Đã xóa ghi nhận vi phạm!");
+}
+
+// 7. ĐỒNG BỘ DỮ LIỆU GOOGLE SHEET AUTOMATICALLY
+// Thay URL Web App API của bạn vào đây:
+const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwUT93K2L5h649r_vO_ro-CsjbykpqPE_ymrr89mfGHMI1bougygWNiH4E9EkaQZgcD/exec";
+
+function syncDataFromSheet() {
+  if (!GOOGLE_SHEET_API_URL || GOOGLE_SHEET_API_URL.includes("AKfycbwUT93K2L5h649r_vO_ro-CsjbykpqPE_ymrr89mfGHMI1bougygWNiH4E9EkaQZgcD")) {
+    console.warn("Chưa cấu hình URL API Google Apps Script.");
+    return;
+  }
+
+  document.getElementById('syncStatus').textContent = "🔄 Đang đồng bộ...";
+
+  fetch(GOOGLE_SHEET_API_URL)
+    .then(res => res.json())
+    .then(data => {
+      // 1. Đồng bộ Nhật Ký
+      if (data.journal && data.journal.length > 0) {
+        journalData = data.journal.map((item, idx) => ({
+          id: idx + 1,
+          author: item.author || "Thành viên",
+          category: item.category || "Chung",
+          content: item.content || "",
+          date: item.date ? new Date(item.date).toLocaleDateString('vi-VN') : "",
+          img: item.img || "",
+          comments: []
+        }));
+        renderJournal('All');
+      }
+
+      // 2. Đồng bộ Thành viên Tổ
+      if (data.members && data.members.length > 0) {
+        teamsData = { to1: [], to2: [], to3: [], to4: [] };
+        data.members.forEach(m => {
+          let nameStr = m.chucvu ? `${m.hoten} (${m.chucvu})` : m.hoten;
+          if (m.to === "Tổ 1") teamsData.to1.push(nameStr);
+          else if (m.to === "Tổ 2") teamsData.to2.push(nameStr);
+          else if (m.to === "Tổ 3") teamsData.to3.push(nameStr);
+          else if (m.to === "Tổ 4") teamsData.to4.push(nameStr);
+        });
+        renderTeams('to1');
+      }
+
+      // 3. Đồng bộ Tuyên dương
+      if (data.honors && data.honors.length > 0) {
+        honorsData = {};
+        data.honors.forEach(h => {
+          honorsData[h.tuan] = { name: h.hoten, reason: h.lydo };
+        });
+        renderHonors();
+      }
+
+      // 4. Đồng bộ Góc ảnh
+      if (data.gallery && data.gallery.length > 0) {
+        galleryData = data.gallery.map((g, idx) => ({
+          id: idx + 1,
+          url: g.url,
+          caption: g.caption
+        }));
+        renderGallery();
+      }
+
+      // 5. Đồng bộ Vi phạm
+      if (data.violations && data.violations.length > 0) {
+        violationsData = data.violations.map((v, idx) => ({
+          id: idx + 1,
+          name: v.hoten,
+          content: v.loi,
+          date: v.ngay ? new Date(v.ngay).toLocaleDateString('vi-VN') : "",
+          note: v.xuly
+        }));
+        renderViolations();
+      }
+
+      document.getElementById('syncStatus').textContent = "● Đã đồng bộ dữ liệu mới nhất từ Google Sheet";
+      toast("Đồng bộ dữ liệu thành công!");
+    })
+    .catch(err => {
+      console.error("Lỗi đồng bộ Google Sheet:", err);
+      document.getElementById('syncStatus').textContent = "⚠️ Lỗi đồng bộ dữ liệu";
+    });
+}
+
+// UTILS
+function scrollToSec(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('show');
+}
+function toast(msg) {
+  let t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  setTimeout(() => t.style.display = 'none', 2500);
+}
+</script>
+</body>
+</html>

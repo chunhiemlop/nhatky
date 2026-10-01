@@ -1,249 +1,243 @@
 <!DOCTYPE html>
-<html lang="vi" class="scroll-smooth">
+<html lang="vi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lớp 10A4 - THPT Lê Duẩn</title>
   
-  <!-- Tailwind CSS & Lucide Icons -->
+  <!-- Tailwind CSS & Lucide Icons & SweetAlert2 -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Plus Jakarta Sans', 'sans-serif'] },
-          colors: {
-            brand: {
-              50: '#f0f7ff',
-              100: '#e0effe',
-              500: '#0284c7',
-              600: '#0265d2',
-              700: '#034ea2',
-              900: '#072d5e'
-            }
-          }
-        }
-      }
-    }
-  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      background: radial-gradient(circle at 10% 20%, rgba(224, 239, 254, 0.8), transparent 40%),
-                  radial-gradient(circle at 90% 80%, rgba(219, 234, 254, 0.6), transparent 40%),
-                  linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    :root {
+      --primary: #087cff;
+      --secondary: #00bddf;
+      --bg-gradient: radial-gradient(circle at 10% 10%, #dff6ff, transparent 40%), linear-gradient(135deg, #eef7ff, #e3f0fc);
+    }
+    
+    body { 
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg-gradient);
       min-height: 100vh;
     }
+
+    /* Hiệu ứng Glassmorphism & 3D Shadow */
     .glass-card {
       background: rgba(255, 255, 255, 0.75);
       backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.8);
-      box-shadow: 0 10px 30px -10px rgba(0, 102, 204, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      box-shadow: 0 20px 40px rgba(8, 124, 255, 0.1), inset 0 1px 2px rgba(255, 255, 255, 0.8);
     }
-    .glass-nav {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+
+    .card-3d {
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .card-3d:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 25px 50px rgba(8, 124, 255, 0.18);
+    }
+
+    /* Orbit 3D Hero Animation */
+    .orbit-container { perspective: 1000px; }
+    .orbit-core {
+      animation: float 4s ease-in-out infinite;
+      transform-style: preserve-3d;
+      box-shadow: 0 20px 40px rgba(8, 123, 255, 0.25), inset -5px -5px 15px rgba(255,255,255,0.8);
+    }
+    .orbit-ring {
+      transform: rotateX(70deg);
+      animation: spin 12s linear infinite;
+    }
+    @keyframes spin { to { transform: rotateX(70deg) rotateZ(360deg); } }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+
+    .glow-text {
+      background: linear-gradient(90deg, #087cff, #00bddf);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
   </style>
 </head>
-<body class="text-slate-800 antialiased selection:bg-brand-500 selection:text-white">
+<body class="text-slate-800">
 
-  <!-- Navigation -->
-  <header class="sticky top-0 z-50 glass-nav">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+  <!-- Header -->
+  <header class="sticky top-0 z-50 glass-card border-b border-blue-100">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center flex-wrap gap-3">
       <div class="flex items-center gap-3">
-        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-brand-600 to-sky-400 text-white flex items-center justify-center font-extrabold text-xl shadow-lg shadow-brand-500/30">
-          10A4
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-500 text-white flex items-center justify-center font-black text-2xl shadow-lg shadow-blue-500/30 transform hover:rotate-6 transition">
+          🏫
         </div>
         <div>
-          <h1 class="font-extrabold text-slate-900 text-lg leading-tight">THPT LÊ DUẨN</h1>
-          <p class="text-xs font-semibold text-brand-600 flex items-center gap-1">
-            <i data-lucide="user-check" class="w-3.5 h-3.5"></i> GVCN: Thầy Thiện • Tây Ninh
-          </p>
+          <h1 class="font-extrabold text-slate-900 text-base leading-tight">LỚP 10A4 - Trường THPT LÊ DUẨN</h1>
+          <p class="text-xs text-slate-500 font-semibold">GVCN: Thầy Thiện • Tây Ninh</p>
         </div>
       </div>
 
-      <!-- Navigation Links -->
-      <nav class="hidden md:flex items-center gap-1 bg-slate-100/80 p-1.5 rounded-2xl border border-slate-200/60">
-        <a href="#journal" class="px-4 py-2 rounded-xl text-sm font-bold text-slate-600 hover:text-brand-600 hover:bg-white transition-all flex items-center gap-2">
-          <i data-lucide="book-open" class="w-4 h-4"></i> Nhật ký
-        </a>
-        <a href="#teams" class="px-4 py-2 rounded-xl text-sm font-bold text-slate-600 hover:text-brand-600 hover:bg-white transition-all flex items-center gap-2">
-          <i data-lucide="users" class="w-4 h-4"></i> Tổ lớp
-        </a>
-        <a href="#honors" class="px-4 py-2 rounded-xl text-sm font-bold text-slate-600 hover:text-brand-600 hover:bg-white transition-all flex items-center gap-2">
-          <i data-lucide="award" class="w-4 h-4"></i> Tuyên dương
-        </a>
-        <a href="#gallery" class="px-4 py-2 rounded-xl text-sm font-bold text-slate-600 hover:text-brand-600 hover:bg-white transition-all flex items-center gap-2">
-          <i data-lucide="image" class="w-4 h-4"></i> Góc ảnh
-        </a>
-        <a href="#violations" class="px-4 py-2 rounded-xl text-sm font-bold text-slate-600 hover:text-brand-600 hover:bg-white transition-all flex items-center gap-2">
-          <i data-lucide="alert-circle" class="w-4 h-4"></i> Vi phạm
-        </a>
+      <nav class="flex items-center gap-1.5 flex-wrap text-xs font-bold">
+        <a href="#journal" class="px-3 py-2 rounded-xl text-blue-600 bg-blue-50 hover:bg-blue-100 transition flex items-center gap-1"><i data-lucide="book-open" class="w-4 h-4"></i> Nhật Ký</a>
+        <a href="#teams" class="px-3 py-2 rounded-xl text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition flex items-center gap-1"><i data-lucide="users" class="w-4 h-4"></i> Tổ Lớp</a>
+        <a href="#honors" class="px-3 py-2 rounded-xl text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition flex items-center gap-1"><i data-lucide="award" class="w-4 h-4"></i> Tuyên Dương</a>
+        <a href="#gallery" class="px-3 py-2 rounded-xl text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition flex items-center gap-1"><i data-lucide="image" class="w-4 h-4"></i> Góc Ảnh</a>
+        <a href="#violations" class="px-3 py-2 rounded-xl text-slate-600 hover:bg-blue-50 hover:text-blue-600 transition flex items-center gap-1"><i data-lucide="shield-alert" class="w-4 h-4"></i> Nề Nếp</a>
+        <button onclick="syncDataFromSheet()" class="ml-2 px-3.5 py-2 bg-gradient-to-r from-blue-600 to-cyan-500 text-white rounded-xl shadow-md hover:shadow-blue-500/20 transition flex items-center gap-1">
+          <i data-lucide="refresh-cw" class="w-4 h-4" id="syncSpinner"></i> Đồng bộ
+        </button>
       </nav>
-
-      <div class="flex items-center gap-2">
-        <button id="syncBtn" onclick="syncDataFromSheet()" class="p-2.5 rounded-xl bg-white text-slate-600 hover:text-brand-600 hover:bg-brand-50 border border-slate-200 transition-all flex items-center gap-2 font-semibold text-xs shadow-sm">
-          <i data-lucide="refresh-cw" class="w-4 h-4" id="syncIcon"></i>
-          <span class="hidden sm:inline">Đồng bộ</span>
-        </button>
-        <button id="adminLoginBtn" onclick="toggleAdminLogin()" class="px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-md shadow-brand-500/20 transition-all flex items-center gap-2">
-          <i data-lucide="lock" class="w-4 h-4"></i> Admin Login
-        </button>
-      </div>
     </div>
   </header>
 
-  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+  <main class="max-w-6xl mx-auto px-4 py-8 space-y-8">
 
-    <!-- Hero Banner -->
-    <section class="glass-card rounded-3xl p-8 sm:p-12 relative overflow-hidden">
-      <div class="max-w-2xl relative z-10 space-y-4">
-        <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-brand-100 text-brand-700 font-bold text-xs">
-          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Niên khóa 2026 - 2027
+    <!-- 3D Hero Banner -->
+    <section class="glass-card rounded-3xl p-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-center shadow-2xl relative overflow-hidden">
+      <div class="md:col-span-8 space-y-4">
+        <span class="inline-block px-3.5 py-1.5 rounded-full bg-blue-100 text-blue-600 text-xs font-extrabold uppercase tracking-wider">
+          🎓 Niên Khóa 2026 - 2027
         </span>
-        <h2 class="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight leading-tight">
-          Ghi Dấu Kỷ Niệm & Nề Nếp <span class="bg-clip-text text-transparent bg-gradient-to-r from-brand-600 to-sky-500">Tập Thể 10A4</span>
-        </h2>
-        <p class="text-slate-600 text-sm sm:text-base leading-relaxed">
-          Nơi cập nhật tự động các hoạt động phong trào, học tập, tuyên dương khen thưởng và góc nhật ký sinh hoạt của lớp THPT Lê Duẩn.
+        <h1 class="text-3xl md:text-5xl font-black text-slate-900 leading-tight">
+          Không Gian Sinh Hoạt <br><span class="glow-text">Tập Thể Lớp 10A4</span>
+        </h1>
+        <p class="text-sm text-slate-600 leading-relaxed max-w-xl">
+          Nơi ghi dấu hành trình học tập, phong trào thi đua, hoạt động nề nếp và những khoảnh khắc kỷ niệm đáng nhớ của tập thể 10A4 THPT Lê Duẩn.
         </p>
-        <div class="pt-2 flex flex-wrap items-center gap-3">
-          <a href="#composer" class="px-5 py-3 rounded-2xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm shadow-lg shadow-brand-500/25 transition-all flex items-center gap-2">
-            <i data-lucide="pen-tool" class="w-4 h-4"></i> Viết bài ngay
+        <div class="flex items-center gap-3 pt-2">
+          <a href="#journal" class="px-5 py-3 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-bold rounded-2xl shadow-lg shadow-blue-500/30 hover:scale-105 transition text-xs flex items-center gap-2">
+            <i data-lucide="edit-3" class="w-4 h-4"></i> Viết Nhật Ký
           </a>
-          <span id="syncStatus" class="text-xs font-semibold text-emerald-600 bg-emerald-50 border border-emerald-200 px-3 py-2 rounded-xl flex items-center gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Đã kết nối Google Sheet
+          <span id="syncStatus" class="text-xs font-semibold text-emerald-600 bg-emerald-50 px-3 py-2 rounded-xl border border-emerald-200 flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Đang kết nối dữ liệu...
           </span>
         </div>
       </div>
+
+      <!-- 3D Orbit Graphics -->
+      <div class="md:col-span-4 hidden md:flex justify-center items-center orbit-container relative h-56">
+        <div class="orbit-ring absolute w-56 h-28 border-2 border-dashed border-blue-400/40 rounded-full"></div>
+        <div class="orbit-core w-28 h-28 rounded-3xl bg-gradient-to-br from-white to-blue-100 flex items-center justify-center text-5xl border border-white">
+          📚
+        </div>
+        <span class="absolute top-2 right-4 text-2xl animate-bounce">✏️</span>
+        <span class="absolute bottom-2 left-4 text-2xl animate-bounce" style="animation-delay: 1s;">🏆</span>
+        <span class="absolute top-10 left-2 text-2xl animate-bounce" style="animation-delay: 1.5s;">⚽</span>
+      </div>
     </section>
 
-    <!-- 1. Nhật Ký Hoạt Động -->
-    <section id="journal" class="glass-card rounded-3xl p-6 sm:p-8 space-y-6">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200/60">
-        <div>
-          <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-            <i data-lucide="book-open" class="w-5 h-5 text-brand-600"></i> Nhật Ký Hoạt Động Hàng Tuần
-          </h3>
-          <p class="text-xs text-slate-500">Chia sẻ góc nhìn, bài viết và hoạt động của tập thể</p>
-        </div>
-        
-        <!-- Filter Bar -->
-        <div class="flex items-center gap-1.5 overflow-x-auto pb-2 sm:pb-0">
-          <button onclick="filterJournal('All', this)" class="filter-chip active px-3.5 py-1.5 rounded-xl text-xs font-bold bg-brand-600 text-white shadow-sm transition-all">Tất cả</button>
-          <button onclick="filterJournal('Học tập', this)" class="filter-chip px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 transition-all">📚 Học tập</button>
-          <button onclick="filterJournal('Phong trào', this)" class="filter-chip px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 transition-all">🏆 Phong trào</button>
-          <button onclick="filterJournal('Vui chơi', this)" class="filter-chip px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 transition-all">🎉 Vui chơi</button>
-          <button onclick="filterJournal('Lao động', this)" class="filter-chip px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 transition-all">🧹 Lao động</button>
+    <!-- 1. Nhật Ký Hoạt Động Hàng Tuần -->
+    <section id="journal" class="glass-card rounded-3xl p-6 shadow-xl card-3d space-y-6">
+      <div class="flex justify-between items-center border-b border-slate-200/80 pb-4">
+        <h2 class="text-xl font-extrabold text-slate-900 flex items-center gap-2">
+          <i data-lucide="book-open" class="text-blue-600"></i> 📖 Nhật Ký Hoạt Động Hàng Tuần
+        </h2>
+        <!-- Filter Tabs -->
+        <div class="flex gap-1.5 text-xs font-bold" id="journalFilters">
+          <button onclick="filterJournal('All', this)" class="px-3 py-1.5 rounded-xl bg-blue-600 text-white shadow-sm">Tất cả</button>
+          <button onclick="filterJournal('Học tập', this)" class="px-3 py-1.5 rounded-xl bg-white text-slate-600 border border-slate-200 hover:bg-slate-50">📚 Học tập</button>
+          <button onclick="filterJournal('Phong trào', this)" class="px-3 py-1.5 rounded-xl bg-white text-slate-600 border border-slate-200 hover:bg-slate-50">🏆 Phong trào</button>
+          <button onclick="filterJournal('Lao động', this)" class="px-3 py-1.5 rounded-xl bg-white text-slate-600 border border-slate-200 hover:bg-slate-50">🧹 Lao động</button>
         </div>
       </div>
 
       <!-- Form Đăng Bài -->
-      <div id="composer" class="bg-slate-50/80 rounded-2xl p-5 border border-slate-200/80 space-y-4">
-        <h4 class="font-bold text-slate-800 text-sm flex items-center gap-2">
-          <i data-lucide="edit-3" class="w-4 h-4 text-brand-600"></i> Đăng bài viết / Chia sẻ ý kiến mới
+      <div class="bg-blue-50/60 rounded-2xl p-4 border border-blue-100 space-y-3">
+        <h4 class="text-xs font-extrabold uppercase text-blue-800 tracking-wider flex items-center gap-1.5">
+          <i data-lucide="plus-circle" class="w-4 h-4"></i> Đăng Bài Viết / Chia Sẻ Mới
         </h4>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <input type="text" id="postAuthor" placeholder="Họ và tên của bạn..." class="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
-          <select id="postCategory" class="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <input type="text" id="postAuthor" placeholder="Họ và tên của bạn..." class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <select id="postCategory" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500">
             <option value="Học tập">📚 Học tập</option>
             <option value="Phong trào">🏆 Phong trào</option>
             <option value="Vui chơi">🎉 Vui chơi</option>
             <option value="Lao động">🧹 Lao động</option>
           </select>
         </div>
-        <textarea id="postContent" rows="3" placeholder="Nhập nội dung chia sẻ..." class="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"></textarea>
-        <div class="flex flex-col sm:flex-row items-center justify-between gap-3">
-          <input type="text" id="postImgUrl" placeholder="Link ảnh URL (tùy chọn)..." class="w-full sm:w-2/3 px-4 py-2 rounded-xl bg-white border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20">
-          <button onclick="addPost()" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-md shadow-brand-500/20 transition-all flex items-center justify-center gap-2">
-            <i data-lucide="send" class="w-3.5 h-3.5"></i> Gửi bài viết
+        <textarea id="postContent" rows="2" placeholder="Nhập nội dung nhật ký hoặc đóng góp ý kiến..." class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+        <div class="flex flex-col md:flex-row gap-3 justify-between items-center">
+          <input type="text" id="postImgUrl" placeholder="Đường dẫn hình ảnh URL (tùy chọn)..." class="w-full md:w-2/3 px-3.5 py-2 rounded-xl border border-slate-200 text-xs bg-white">
+          <button onclick="addPost()" class="w-full md:w-auto px-6 py-2.5 bg-gradient-to-r from-blue-600 to-cyan-500 text-white font-extrabold rounded-xl text-xs shadow-lg shadow-blue-500/20 hover:scale-105 transition flex items-center justify-center gap-2">
+            <i data-lucide="send" class="w-3.5 h-3.5"></i> 🚀 Gửi bài viết
           </button>
         </div>
       </div>
 
-      <!-- Feed Container -->
-      <div id="journalFeed" class="space-y-4"></div>
+      <!-- Feed Bài Viết -->
+      <div id="journalFeed" class="space-y-4">
+        <div class="text-center py-8 text-slate-400 text-sm">Đang kết nối tải nhật ký...</div>
+      </div>
     </section>
 
-    <!-- 2. Danh Sách Tổ Lớp -->
-    <section id="teams" class="glass-card rounded-3xl p-6 sm:p-8 space-y-6">
-      <div class="pb-4 border-b border-slate-200/60">
-        <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-          <i data-lucide="users" class="w-5 h-5 text-brand-600"></i> Danh Sách Thành Viên Các Tổ
-        </h3>
+    <!-- 2. Danh Sách Các Tổ -->
+    <section id="teams" class="glass-card rounded-3xl p-6 shadow-xl card-3d space-y-4">
+      <div class="flex justify-between items-center border-b border-slate-200/80 pb-4">
+        <h2 class="text-xl font-extrabold text-slate-900 flex items-center gap-2">
+          <i data-lucide="users" class="text-blue-600"></i> 👥 Danh Sách Thành Viên Các Tổ
+        </h2>
+        <!-- Team Tabs -->
+        <div class="flex gap-1.5 text-xs font-bold" id="teamTabs">
+          <button onclick="switchTeam('Tổ 1', this)" class="px-3.5 py-1.5 rounded-xl bg-blue-600 text-white shadow-md">Tổ 1</button>
+          <button onclick="switchTeam('Tổ 2', this)" class="px-3.5 py-1.5 rounded-xl bg-white text-slate-600 border border-slate-200 hover:bg-slate-50">Tổ 2</button>
+          <button onclick="switchTeam('Tổ 3', this)" class="px-3.5 py-1.5 rounded-xl bg-white text-slate-600 border border-slate-200 hover:bg-slate-50">Tổ 3</button>
+          <button onclick="switchTeam('Tổ 4', this)" class="px-3.5 py-1.5 rounded-xl bg-white text-slate-600 border border-slate-200 hover:bg-slate-50">Tổ 4</button>
+        </div>
       </div>
-      <div class="flex gap-2 border-b border-slate-200/60 pb-3">
-        <button onclick="switchTeam('Tổ 1', this)" class="team-tab active px-4 py-2 rounded-xl text-xs font-bold bg-brand-600 text-white shadow-sm transition-all">Tổ 1</button>
-        <button onclick="switchTeam('Tổ 2', this)" class="team-tab px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 transition-all">Tổ 2</button>
-        <button onclick="switchTeam('Tổ 3', this)" class="team-tab px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 transition-all">Tổ 3</button>
-        <button onclick="switchTeam('Tổ 4', this)" class="team-tab px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 transition-all">Tổ 4</button>
+      <div id="teamMemberList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        <!-- Render bởi JavaScript -->
       </div>
-      <div id="teamMemberList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3"></div>
     </section>
 
-    <!-- 3. Tuyên Dương -->
-    <section id="honors" class="glass-card rounded-3xl p-6 sm:p-8 space-y-6">
-      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200/60">
-        <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-          <i data-lucide="award" class="w-5 h-5 text-amber-500"></i> Tuyên Dương Học Sinh Tiêu Biểu
-        </h3>
-        <div class="flex items-center gap-3">
-          <select id="weekSelect" onchange="renderHonors()" class="px-3 py-1.5 rounded-xl bg-white border border-slate-200 text-xs font-bold text-slate-700 focus:outline-none">
-            <!-- Dynamic Weeks 1 to 35 -->
+    <!-- 3. Tuyên Dương Học Sinh Tiêu Biểu -->
+    <section id="honors" class="glass-card rounded-3xl p-6 shadow-xl card-3d space-y-4 bg-gradient-to-br from-amber-500/10 via-white/80 to-orange-500/10 border-amber-200">
+      <div class="flex justify-between items-center border-b border-amber-200/80 pb-4">
+        <h2 class="text-xl font-extrabold text-amber-900 flex items-center gap-2">
+          <i data-lucide="award" class="text-amber-600"></i> 🌟 Tuyên Dương Học Sinh Tiêu Biểu Hàng Tuần
+        </h2>
+        <div class="flex items-center gap-2 text-xs font-bold">
+          <span>Chọn tuần:</span>
+          <select id="weekSelect" onchange="renderHonors()" class="px-3 py-1.5 rounded-xl border border-amber-300 bg-white text-amber-900 focus:outline-none">
+            <!-- Tuần 1-35 -->
           </select>
-          <button id="adminHonorBtn" onclick="openHonorModal()" class="hidden px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-sm transition-all flex items-center gap-1">
-            <i data-lucide="edit" class="w-3.5 h-3.5"></i> Cập nhật
-          </button>
         </div>
       </div>
-      <div id="honorsDisplay" class="p-6 rounded-2xl bg-amber-50/60 border border-amber-200/60"></div>
+      <div id="honorsDisplay" class="p-5 rounded-2xl bg-white/90 border border-amber-200 shadow-sm space-y-2">
+        <!-- Render bởi JavaScript -->
+      </div>
     </section>
 
-    <!-- 4. Góc Ảnh -->
-    <section id="gallery" class="glass-card rounded-3xl p-6 sm:p-8 space-y-6">
-      <div class="pb-4 border-b border-slate-200/60 flex items-center justify-between">
-        <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-          <i data-lucide="image" class="w-5 h-5 text-brand-600"></i> Góc Ảnh Kỷ Niệm 10A4
-        </h3>
+    <!-- 4. Góc Ảnh Nhật Ký -->
+    <section id="gallery" class="glass-card rounded-3xl p-6 shadow-xl card-3d space-y-4">
+      <div class="flex justify-between items-center border-b border-slate-200/80 pb-4">
+        <h2 class="text-xl font-extrabold text-slate-900 flex items-center gap-2">
+          <i data-lucide="camera" class="text-blue-600"></i> 📸 Góc Ảnh Nhật Ký 10A4
+        </h2>
       </div>
-      <div class="bg-slate-50/80 p-4 rounded-2xl border border-slate-200/80 flex flex-col sm:flex-row gap-3">
-        <input type="text" id="photoUrl" placeholder="Dán URL hình ảnh..." class="flex-1 px-4 py-2 rounded-xl bg-white border border-slate-200 text-xs focus:outline-none">
-        <input type="text" id="photoCaption" placeholder="Chú thích ảnh..." class="flex-1 px-4 py-2 rounded-xl bg-white border border-slate-200 text-xs focus:outline-none">
-        <button onclick="addPhoto()" class="px-5 py-2 rounded-xl bg-brand-600 text-white font-bold text-xs hover:bg-brand-700 transition-all flex items-center justify-center gap-1.5">
-          <i data-lucide="upload" class="w-3.5 h-3.5"></i> Đăng ảnh
-        </button>
+      <div id="galleryGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        <!-- Render bởi JavaScript -->
       </div>
-      <div id="galleryGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4"></div>
     </section>
 
-    <!-- 5. Bảng Vi Phạm -->
-    <section id="violations" class="glass-card rounded-3xl p-6 sm:p-8 space-y-6">
-      <div class="flex items-center justify-between pb-4 border-b border-slate-200/60">
-        <h3 class="text-xl font-bold text-slate-900 flex items-center gap-2">
-          <i data-lucide="alert-circle" class="w-5 h-5 text-rose-500"></i> Bảng Nề Nếp & Nhắc Nhở
-        </h3>
-        <button id="adminViolateBtn" onclick="openViolateModal()" class="hidden px-3 py-1.5 rounded-xl bg-rose-500 hover:bg-rose-600 text-white font-bold text-xs shadow-sm transition-all flex items-center gap-1">
-          <i data-lucide="plus" class="w-3.5 h-3.5"></i> Thêm vi phạm
-        </button>
+    <!-- 5. Bảng Theo Dõi Vi Phạm -->
+    <section id="violations" class="glass-card rounded-3xl p-6 shadow-xl card-3d space-y-4">
+      <div class="flex justify-between items-center border-b border-slate-200/80 pb-4">
+        <h2 class="text-xl font-extrabold text-slate-900 flex items-center gap-2">
+          <i data-lucide="alert-triangle" class="text-rose-600"></i> ⚠️ Bảng Theo Dõi Nề Nếp & Vi Phạm
+        </h2>
       </div>
-      <div class="overflow-x-auto">
-        <table class="w-full text-left border-collapse text-xs sm:text-sm">
-          <thead>
-            <tr class="border-b border-slate-200/80 bg-slate-50/80 text-slate-500 font-bold">
-              <th class="p-3 rounded-l-xl">Họ tên</th>
-              <th class="p-3">Nội dung vi phạm</th>
-              <th class="p-3">Ngày</th>
-              <th class="p-3 rounded-r-xl">Hình thức xử lý</th>
+      <div class="overflow-x-auto rounded-2xl border border-slate-200/80">
+        <table class="w-full text-left text-xs sm:text-sm text-slate-700">
+          <thead class="bg-blue-50/80 text-blue-900 font-extrabold uppercase tracking-wider text-[11px]">
+            <tr>
+              <th class="p-3.5">Họ và Tên</th>
+              <th class="p-3.5">Nội dung vi phạm</th>
+              <th class="p-3.5">Ngày ghi nhận</th>
+              <th class="p-3.5">Xử lý / Nhắc nhở</th>
             </tr>
           </thead>
-          <tbody id="violationTableBody" class="divide-y divide-slate-100 font-medium"></tbody>
+          <tbody id="violationTableBody" class="divide-y divide-slate-100 bg-white/60">
+            <!-- Render bởi JavaScript -->
+          </tbody>
         </table>
       </div>
     </section>
@@ -251,34 +245,30 @@
   </main>
 
   <footer class="text-center py-8 text-xs font-semibold text-slate-500">
-    Lớp 10A4 - Trường THPT Lê Duẩn, Tây Ninh • GVCN: Thầy Thiện
+    💙 Trang Web Lớp 10A4 - Trường THPT Lê Duẩn Tây Ninh • GVCN: Thầy Thiện
   </footer>
 
-  <!-- JAVASCRIPT APP LOGIC -->
   <script>
-    // URL API GOOGLE APPS SCRIPT
-    const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwWWSUhCkDMPk72uJzUfHDvbUEoxSS-KOrSmS1aBWb9z665W1zZNjfzpPNENTagsmV3/exec";
+    // URL Web App Google Apps Script
+    const GOOGLE_SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwx4O_P9wuJNuclPCqgH42lv5H2A1XBxNN0UcmprACDBscxmtL_isUu1gODcmHH6sE_/exec";
 
-    let isAdmin = false;
-    let currentFilter = 'All';
-    let currentTeam = 'Tổ 1';
+    // Kho lưu trữ dữ liệu toàn cục
+    let globalData = {
+      journal: [],
+      members: [],
+      honors: [],
+      gallery: [],
+      violations: []
+    };
 
-    // Core State Data
-    let journalData = [];
-    let membersData = [];
-    let honorsData = {};
-    let galleryData = [];
-    let violationsData = [];
+    let currentTeamFilter = 'Tổ 1';
+    let currentJournalFilter = 'All';
 
-    // Init App
     window.onload = function() {
       initWeeks();
-      loadLocalData();
-      renderAll();
+      lucide.createIcons();
       syncDataFromSheet();
-      
-      // Auto sync every 60 seconds
-      setInterval(syncDataFromSheet, 60000);
+      setInterval(syncDataFromSheet, 30000); // Tự động đồng bộ mỗi 30s
     };
 
     function initWeeks() {
@@ -291,133 +281,70 @@
       }
     }
 
-    function renderAll() {
-      renderJournal(currentFilter);
-      renderTeams(currentTeam);
-      renderHonors();
-      renderGallery();
-      renderViolations();
-      lucide.createIcons();
-    }
-
-    // --- LOCAL STORAGE HELPERS ---
-    function saveLocalData() {
-      localStorage.setItem('journalData', JSON.stringify(journalData));
-      localStorage.setItem('galleryData', JSON.stringify(galleryData));
-      localStorage.setItem('violationsData', JSON.stringify(violationsData));
-      localStorage.setItem('honorsData', JSON.stringify(honorsData));
-    }
-
-    function loadLocalData() {
-      if(localStorage.getItem('journalData')) journalData = JSON.parse(localStorage.getItem('journalData'));
-      if(localStorage.getItem('galleryData')) galleryData = JSON.parse(localStorage.getItem('galleryData'));
-      if(localStorage.getItem('violationsData')) violationsData = JSON.parse(localStorage.getItem('violationsData'));
-      if(localStorage.getItem('honorsData')) honorsData = JSON.parse(localStorage.getItem('honorsData'));
-    }
-
-    // --- SYNC WITH GOOGLE SHEET ---
+    // TẢI & ĐỒNG BỘ DỮ LIỆU TỪ GOOGLE SHEET
     function syncDataFromSheet() {
-      if(!GOOGLE_SHEET_API_URL || GOOGLE_SHEET_API_URL.includes("YOUR_DEPLOYMENT_ID")) {
-        console.warn("Chưa cấu hình URL Deployment Apps Script.");
-        return;
-      }
-
-      const syncIcon = document.getElementById('syncIcon');
-      syncIcon.classList.add('animate-spin');
+      const spinner = document.getElementById('syncSpinner');
+      if (spinner) spinner.classList.add('animate-spin');
+      document.getElementById('syncStatus').innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span> Đang đồng bộ Google Sheet...`;
 
       fetch(GOOGLE_SHEET_API_URL)
         .then(res => res.json())
         .then(data => {
-          if (data.status === "success") {
-            if(data.journal) journalData = data.journal;
-            if(data.members) membersData = data.members;
-            if(data.gallery) galleryData = data.gallery;
-            if(data.violations) violationsData = data.violations;
-            if(data.honors) {
-              honorsData = {};
-              data.honors.forEach(h => honorsData[h.tuan] = h);
-            }
-            saveLocalData();
-            renderAll();
-            document.getElementById('syncStatus').innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500"></span> Tự động đồng bộ thành công`;
-          }
+          if (spinner) spinner.classList.remove('animate-spin');
+          document.getElementById('syncStatus').innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500"></span> Đã đồng bộ Google Sheet`;
+
+          globalData = data;
+
+          renderJournal(currentJournalFilter);
+          renderTeams(currentTeamFilter);
+          renderHonors();
+          renderGallery();
+          renderViolations();
         })
         .catch(err => {
-          console.error("Sync error:", err);
-          document.getElementById('syncStatus').innerHTML = `<span class="w-2 h-2 rounded-full bg-amber-500"></span> Ngoại tuyến (Đã tải bản lưu)`;
-        })
-        .finally(() => {
-          syncIcon.classList.remove('animate-spin');
+          if (spinner) spinner.classList.remove('animate-spin');
+          document.getElementById('syncStatus').innerHTML = `<span class="w-2 h-2 rounded-full bg-rose-500"></span> Lỗi đồng bộ`;
+          console.error("Lỗi đồng bộ:", err);
         });
     }
 
-    function sendApiPost(payload) {
-      if(!GOOGLE_SHEET_API_URL || GOOGLE_SHEET_API_URL.includes("YOUR_DEPLOYMENT_ID")) return;
-      fetch(GOOGLE_SHEET_API_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-    }
-
-    // --- RENDER & ACTION HANDLERS ---
-    
-    // 1. JOURNAL
+    // 1. HIỂN THỊ NHẬT KÝ
     function filterJournal(cat, btn) {
-      document.querySelectorAll('.filter-chip').forEach(c => {
-        c.className = "filter-chip px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 transition-all";
+      document.querySelectorAll('#journalFilters button').forEach(b => {
+        b.className = "px-3 py-1.5 rounded-xl bg-white text-slate-600 border border-slate-200 hover:bg-slate-50";
       });
-      btn.className = "filter-chip active px-3.5 py-1.5 rounded-xl text-xs font-bold bg-brand-600 text-white shadow-sm transition-all";
-      currentFilter = cat;
+      btn.className = "px-3 py-1.5 rounded-xl bg-blue-600 text-white shadow-sm";
+      currentJournalFilter = cat;
       renderJournal(cat);
     }
 
     function renderJournal(filter) {
       const feed = document.getElementById('journalFeed');
-      const filtered = filter === 'All' ? journalData : journalData.filter(j => j.category === filter);
-
-      if(filtered.length === 0) {
-        feed.innerHTML = `<p class="text-center text-xs text-slate-400 py-6">Chưa có bài viết nào trong danh mục này.</p>`;
+      if (!globalData.journal || globalData.journal.length === 0) {
+        feed.innerHTML = `<div class="p-6 text-center text-slate-400 text-xs">Chưa có bài viết nhật ký nào.</div>`;
         return;
       }
 
-      feed.innerHTML = filtered.map(post => `
-        <div class="bg-white rounded-2xl p-5 border border-slate-200/80 space-y-3 shadow-sm">
-          <div class="flex items-center justify-between">
+      const filtered = filter === 'All' ? globalData.journal : globalData.journal.filter(j => j.category === filter);
+
+      feed.innerHTML = filtered.map(item => `
+        <div class="bg-white/90 rounded-2xl p-5 border border-slate-100 shadow-sm space-y-3">
+          <div class="flex justify-between items-center">
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-xl bg-brand-100 text-brand-700 font-extrabold flex items-center justify-center text-sm">
-                ${post.author.charAt(0).toUpperCase()}
+              <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-blue-500 to-cyan-400 text-white font-extrabold flex items-center justify-center text-sm shadow-md">
+                ${(item.author || 'H').charAt(0)}
               </div>
               <div>
-                <h5 class="font-bold text-slate-900 text-sm">${post.author}</h5>
-                <span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 text-slate-600">${post.category}</span>
-                <span class="text-[10px] text-slate-400 ml-1">${post.date}</span>
+                <h4 class="font-extrabold text-slate-900 text-sm">${item.author}</h4>
+                <p class="text-[11px] text-slate-400 font-semibold">${item.date}</p>
               </div>
             </div>
+            <span class="px-3 py-1 bg-blue-50 text-blue-600 font-extrabold text-xs rounded-xl">${item.category}</span>
           </div>
-          <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">${post.content}</p>
-          ${post.img ? `<img src="${post.img}" class="w-full max-h-80 object-cover rounded-xl border border-slate-100">` : ''}
-          
-          <!-- Comments -->
-          <div class="bg-slate-50/80 rounded-xl p-3 space-y-2 text-xs">
-            <span class="font-bold text-slate-700 block">Bình luận (${post.comments ? post.comments.length : 0})</span>
-            <div class="space-y-1.5">
-              ${(post.comments || []).map(c => `
-                <div class="bg-white p-2 rounded-lg border border-slate-200/60 flex justify-between">
-                  <span><b class="text-slate-800">${c.author}:</b> ${c.text}</span>
-                </div>
-              `).join('')}
-            </div>
-            <div class="flex gap-2 pt-1">
-              <input type="text" id="cmtName_${post.id}" placeholder="Tên..." class="w-1/3 px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs">
-              <input type="text" id="cmtText_${post.id}" placeholder="Viết bình luận..." class="flex-1 px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs">
-              <button onclick="addComment(${post.id})" class="px-3 py-1.5 bg-brand-600 text-white rounded-lg font-bold text-xs">Gửi</button>
-            </div>
-          </div>
+          <p class="text-slate-700 text-sm leading-relaxed">${item.content}</p>
+          ${item.img ? `<img src="${item.img}" class="w-full max-h-80 object-cover rounded-xl border border-slate-100">` : ''}
         </div>
       `).join('');
-      lucide.createIcons();
     }
 
     function addPost() {
@@ -426,235 +353,126 @@
       const content = document.getElementById('postContent').value.trim();
       const img = document.getElementById('postImgUrl').value.trim();
 
-      if(!author || !content) {
-        Swal.fire("Thông báo", "Vui lòng nhập tên và nội dung bài viết!", "warning");
-        return;
-      }
+      if (!author || !content) return Swal.fire('Thông báo', 'Vui lòng nhập họ tên và nội dung bài viết!', 'warning');
 
-      const newPost = {
-        id: Date.now(),
-        author, category, content, img,
-        date: new Date().toLocaleDateString('vi-VN'),
-        comments: []
-      };
-
-      journalData.unshift(newPost);
-      saveLocalData();
-      renderJournal(currentFilter);
-
-      document.getElementById('postContent').value = '';
-      document.getElementById('postImgUrl').value = '';
-
-      sendApiPost({ action: "ADD_POST", data: newPost });
-      Swal.fire("Thành công", "Đã gửi bài viết lên trang!", "success");
-    }
-
-    function addComment(postId) {
-      const name = document.getElementById(`cmtName_${postId}`).value.trim() || "Thành viên";
-      const text = document.getElementById(`cmtText_${postId}`).value.trim();
-
-      if(!text) return;
-
-      const post = journalData.find(j => j.id === postId);
-      if(post) {
-        if(!post.comments) post.comments = [];
-        post.comments.push({ id: Date.now(), author: name, text: text });
-        saveLocalData();
-        renderJournal(currentFilter);
-      }
-    }
-
-    // 2. TEAMS
-    function switchTeam(teamName, btn) {
-      document.querySelectorAll('.team-tab').forEach(b => {
-        b.className = "team-tab px-4 py-2 rounded-xl text-xs font-bold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200 transition-all";
+      Swal.fire({
+        title: 'Đang gửi bài viết...',
+        text: 'Dữ liệu đang được ghi lên Google Sheet',
+        allowOutsideClick: false,
+        didOpen: () => { Swal.showLoading(); }
       });
-      btn.className = "team-tab active px-4 py-2 rounded-xl text-xs font-bold bg-brand-600 text-white shadow-sm transition-all";
-      currentTeam = teamName;
+
+      const newPost = { author, category, content, date: new Date().toLocaleDateString('vi-VN'), img };
+
+      fetch(GOOGLE_SHEET_API_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'ADD_POST', data: newPost })
+      })
+      .then(() => {
+        Swal.fire('Thành công!', 'Bài viết đã lưu lên Google Sheet!', 'success');
+        document.getElementById('postContent').value = '';
+        document.getElementById('postImgUrl').value = '';
+        setTimeout(syncDataFromSheet, 1500);
+      });
+    }
+
+    // 2. HIỂN THỊ THÀNH VIÊN TỔ
+    function switchTeam(teamName, btn) {
+      document.querySelectorAll('#teamTabs button').forEach(b => {
+        b.className = "px-3.5 py-1.5 rounded-xl bg-white text-slate-600 border border-slate-200 hover:bg-slate-50";
+      });
+      btn.className = "px-3.5 py-1.5 rounded-xl bg-blue-600 text-white shadow-md";
+      currentTeamFilter = teamName;
       renderTeams(teamName);
     }
 
     function renderTeams(teamName) {
-      const list = membersData.filter(m => m.to === teamName);
-      const container = document.getElementById('teamMemberList');
-
-      if(list.length === 0) {
-        container.innerHTML = `<p class="col-span-full text-xs text-slate-400 py-4">Đang tải danh sách thành viên...</p>`;
+      const list = document.getElementById('teamMemberList');
+      if (!globalData.members || globalData.members.length === 0) {
+        list.innerHTML = `<div class="col-span-full text-center text-slate-400 text-xs py-4">Chưa có dữ liệu thành viên.</div>`;
         return;
       }
 
-      container.innerHTML = list.map(m => `
-        <div class="bg-white p-3 rounded-xl border border-slate-200/80 flex items-center gap-3">
-          <div class="w-9 h-9 rounded-xl bg-brand-50 text-brand-600 font-bold flex items-center justify-center text-xs">
+      const filtered = globalData.members.filter(m => m.to === teamName || m.to === teamName.replace('Tổ ', ''));
+
+      list.innerHTML = filtered.map(m => `
+        <div class="bg-white/90 p-3.5 rounded-2xl border border-slate-100 shadow-sm flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 font-black flex items-center justify-center text-sm">
             ${m.hoten.charAt(0)}
           </div>
           <div>
-            <h6 class="font-bold text-slate-800 text-xs">${m.hoten}</h6>
-            <span class="text-[10px] text-slate-500">${m.chucvu}</span>
+            <h5 class="font-extrabold text-xs text-slate-800">${m.hoten}</h5>
+            <p class="text-[10px] text-slate-400 font-semibold">${m.chucvu || 'Thành viên'}</p>
           </div>
         </div>
       `).join('');
     }
 
-    // 3. HONORS
+    // 3. HIỂN THỊ TUYÊN DƯƠNG
     function renderHonors() {
       const week = document.getElementById('weekSelect').value;
-      const data = honorsData[week];
-      const container = document.getElementById('honorsDisplay');
+      const display = document.getElementById('honorsDisplay');
 
-      if(data && data.hoten) {
-        container.innerHTML = `
-          <h4 class="font-extrabold text-amber-800 text-base flex items-center gap-2">
-            🏆 Học sinh tiêu biểu Tuần ${week}: <span class="text-brand-700">${data.hoten}</span>
-          </h4>
-          <p class="text-xs font-semibold text-amber-700 mt-1">✨ 成績 / Lý do: ${data.lydo}</p>
-        `;
-      } else {
-        container.innerHTML = `<p class="text-xs font-medium text-slate-500">Chưa có cập nhật tuyên dương cho Tuần ${week}.</p>`;
-      }
-    }
-
-    function openHonorModal() {
-      const week = document.getElementById('weekSelect').value;
-      Swal.fire({
-        title: `Tuyên dương Tuần ${week}`,
-        html: `
-          <input id="swalHonorName" class="swal2-input" placeholder="Họ tên học sinh">
-          <input id="swalHonorReason" class="swal2-input" placeholder="Lý do tuyên dương">
-        `,
-        showCancelButton: true,
-        confirmButtonText: 'Lưu lại',
-        preConfirm: () => {
-          return {
-            hoten: document.getElementById('swalHonorName').value,
-            lydo: document.getElementById('swalHonorReason').value
-          }
-        }
-      }).then((res) => {
-        if(res.isConfirmed && res.value.hoten) {
-          const payload = { tuan: week, hoten: res.value.hoten, lydo: res.value.lydo };
-          honorsData[week] = payload;
-          saveLocalData();
-          renderHonors();
-          sendApiPost({ action: "UPDATE_HONOR", data: payload });
-        }
-      });
-    }
-
-    // 4. GALLERY
-    function renderGallery() {
-      const grid = document.getElementById('galleryGrid');
-      if(galleryData.length === 0) {
-        grid.innerHTML = `<p class="col-span-full text-xs text-slate-400 py-4">Chưa có hình ảnh nào.</p>`;
+      if (!globalData.honors || globalData.honors.length === 0) {
+        display.innerHTML = `<p class="text-xs text-slate-400">Chưa có thông tin tuyên dương.</p>`;
         return;
       }
-      grid.innerHTML = galleryData.map(g => `
-        <div class="group relative rounded-2xl overflow-hidden aspect-square border border-slate-200/80 shadow-sm">
-          <img src="${g.url}" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-300">
-          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all p-3 flex items-end">
-            <span class="text-white text-xs font-bold">${g.caption || ''}</span>
+
+      const honor = globalData.honors.find(h => String(h.tuan) === String(week));
+
+      if (honor) {
+        display.innerHTML = `
+          <div class="flex items-center gap-3">
+            <span class="text-3xl">🏆</span>
+            <div>
+              <h4 class="font-extrabold text-amber-900 text-base">Học Sinh Tiêu Biểu Tuần ${week}: <span class="text-blue-600">${honor.hoten}</span></h4>
+              <p class="text-xs font-semibold text-amber-700 mt-0.5">✨ <b>Thành tích:</b> ${honor.lydo}</p>
+            </div>
           </div>
+        `;
+      } else {
+        display.innerHTML = `<p class="text-xs text-slate-400">Tuần ${week} chưa có cập nhật tuyên dương.</p>`;
+      }
+    }
+
+    // 4. HIỂN THỊ GÓC ẢNH
+    function renderGallery() {
+      const grid = document.getElementById('galleryGrid');
+      if (!globalData.gallery || globalData.gallery.length === 0) {
+        grid.innerHTML = `<div class="col-span-full text-center text-slate-400 text-xs py-4">Chưa có hình ảnh nào.</div>`;
+        return;
+      }
+
+      grid.innerHTML = globalData.gallery.map(img => `
+        <div class="group relative h-36 rounded-2xl overflow-hidden shadow-md border border-white/80">
+          <img src="${img.url}" class="w-full h-full object-cover group-hover:scale-110 transition duration-300">
+          ${img.caption ? `
+            <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-2 text-white text-[11px] font-medium truncate">
+              ${img.caption}
+            </div>
+          ` : ''}
         </div>
       `).join('');
     }
 
-    function addPhoto() {
-      const url = document.getElementById('photoUrl').value.trim();
-      const caption = document.getElementById('photoCaption').value.trim();
-
-      if(!url) return Swal.fire("Lỗi", "Vui lòng nhập đường dẫn URL hình ảnh!", "error");
-
-      const photo = { id: Date.now(), url, caption };
-      galleryData.unshift(photo);
-      saveLocalData();
-      renderGallery();
-
-      document.getElementById('photoUrl').value = '';
-      document.getElementById('photoCaption').value = '';
-
-      sendApiPost({ action: "ADD_PHOTO", data: photo });
-      Swal.fire("Thành công", "Đã tải ảnh lên thành công!", "success");
-    }
-
-    // 5. VIOLATIONS
+    // 5. HIỂN THỊ VI PHẠM
     function renderViolations() {
       const tbody = document.getElementById('violationTableBody');
-      if(violationsData.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-xs text-slate-400">Không có ghi nhận vi phạm.</td></tr>`;
+      if (!globalData.violations || globalData.violations.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="p-4 text-center text-slate-400 text-xs">Không có ghi nhận vi phạm nề nếp.</td></tr>`;
         return;
       }
-      tbody.innerHTML = violationsData.map(v => `
-        <tr class="hover:bg-slate-50/80">
-          <td class="p-3 font-bold text-slate-800">${v.hoten}</td>
-          <td class="p-3 text-rose-600 font-semibold">${v.loi}</td>
-          <td class="p-3 text-slate-500">${v.ngay}</td>
-          <td class="p-3 text-slate-600">${v.xuly}</td>
+
+      tbody.innerHTML = globalData.violations.map(v => `
+        <tr class="hover:bg-slate-50/80 transition">
+          <td class="p-3.5 font-extrabold text-slate-900">${v.hoten}</td>
+          <td class="p-3.5 text-rose-600 font-bold">${v.loi}</td>
+          <td class="p-3.5 text-slate-400 font-semibold">${v.ngay}</td>
+          <td class="p-3.5 font-semibold text-slate-600">${v.xuly}</td>
         </tr>
       `).join('');
-    }
-
-    function openViolateModal() {
-      Swal.fire({
-        title: 'Thêm Ghi Nhận Vi Phạm',
-        html: `
-          <input id="swalVName" class="swal2-input" placeholder="Họ và tên">
-          <input id="swalVLoi" class="swal2-input" placeholder="Nội dung vi phạm">
-          <input id="swalVXuLy" class="swal2-input" placeholder="Hình thức xử lý">
-        `,
-        showCancelButton: true,
-        confirmButtonText: 'Lưu',
-        preConfirm: () => {
-          return {
-            hoten: document.getElementById('swalVName').value,
-            loi: document.getElementById('swalVLoi').value,
-            xuly: document.getElementById('swalVXuLy').value,
-            ngay: new Date().toLocaleDateString('vi-VN')
-          }
-        }
-      }).then(res => {
-        if(res.isConfirmed && res.value.hoten) {
-          const v = { id: Date.now(), ...res.value };
-          violationsData.unshift(v);
-          saveLocalData();
-          renderViolations();
-          sendApiPost({ action: "ADD_VIOLATION", data: v });
-        }
-      });
-    }
-
-    // ADMIN TOGGLE
-    function toggleAdminLogin() {
-      if(!isAdmin) {
-        Swal.fire({
-          title: 'Đăng nhập GVCN',
-          html: `
-            <input id="adminUser" class="swal2-input" placeholder="Tài khoản">
-            <input id="adminPass" type="password" class="swal2-input" placeholder="Mật khẩu">
-          `,
-          confirmButtonText: 'Đăng nhập',
-          preConfirm: () => {
-            const u = document.getElementById('adminUser').value;
-            const p = document.getElementById('adminPass').value;
-            if(u === "Admin" && p === "Thien@2627$") return true;
-            Swal.showValidationMessage("Sai tài khoản hoặc mật khẩu!");
-          }
-        }).then(res => {
-          if(res.isConfirmed) {
-            isAdmin = true;
-            document.getElementById('adminLoginBtn').innerHTML = `<i data-lucide="unlock" class="w-4 h-4"></i> Đăng xuất`;
-            document.getElementById('adminHonorBtn').classList.remove('hidden');
-            document.getElementById('adminViolateBtn').classList.remove('hidden');
-            lucide.createIcons();
-            Swal.fire("Đã đăng nhập", "Bạn có quyền chỉnh sửa!", "success");
-          }
-        });
-      } else {
-        isAdmin = false;
-        document.getElementById('adminLoginBtn').innerHTML = `<i data-lucide="lock" class="w-4 h-4"></i> Admin Login`;
-        document.getElementById('adminHonorBtn').classList.add('hidden');
-        document.getElementById('adminViolateBtn').classList.add('hidden');
-        lucide.createIcons();
-      }
     }
   </script>
 </body>
